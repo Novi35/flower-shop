@@ -17,20 +17,24 @@ window.onscroll = () =>{
     navbar.classList.remove('active');
 }
 
-document.querySelectorAll('.qty-wrapper').forEach(wrapper => {
-   const input = wrapper.querySelector('.qty');
-   const plusBtn = wrapper.querySelector('.plus');
-   const minusBtn = wrapper.querySelector('.minus');
+document.addEventListener('click', function(e){
 
+  if(e.target.classList.contains('quick-plus') || 
+     e.target.classList.contains('quick-minus')){
 
-   plusBtn.addEventListener('click', () => {
-      input.value = parseInt(input.value) + 1;
-   });
+    const wrapper = e.target.closest('.quick-qty');
+    const input = wrapper.querySelector('.quick-qty-input');
+    let value = parseInt(input.value);
 
+    if(e.target.classList.contains('quick-plus')){
+      value++;
+    }
 
-   minusBtn.addEventListener('click', () => {
-      if (parseInt(input.value) > 1) {
-         input.value = parseInt(input.value) - 1;
-      }
-   });
+    if(e.target.classList.contains('quick-minus') && value > 1){
+      value--;
+    }
+
+    input.value = value;
+  }
+
 });

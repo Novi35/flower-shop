@@ -38,7 +38,7 @@ if(isset($_POST['update_quantity'])){
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>shopping cart</title>
 
-   <!-- icon  -->
+   <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
    <!-- custom admin css file link  -->
@@ -49,61 +49,93 @@ if(isset($_POST['update_quantity'])){
    
 <?php @include 'header.php'; ?>
 
-<section class="heading">
-    <h3>shopping cart</h3>
-    <p> <a href="home.php">home</a> / cart </p>
-</section>
+<?php
+$grand_total = 0;
+$select_cart = mysqli_query($conn, "SELECT * FROM `cart` WHERE user_id = '$user_id'");
+?>
 
 <section class="shopping-cart">
-    <h1 class="title">products added</h1>
-    <div class="box-container">
-
-    <?php
-        $grand_total = 0;
-        $select_cart = mysqli_query($conn, "SELECT * FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
-        if(mysqli_num_rows($select_cart) > 0){
-            while($fetch_cart = mysqli_fetch_assoc($select_cart)){
-    ?>
-    <form action="" method="post" class="box">
-        <a href="cart.php?delete=<?php echo $fetch_cart['id']; ?>" class="fas fa-times" onclick="return confirm('delete this from cart?');"></a>
-        <img src="flowers/<?php echo $fetch_cart['image']; ?>" alt="" class="image">
-        <div class="name"><?php echo $fetch_cart['name']; ?></div>
-        <div class="price-qty">
-            <div class="price">Rp <?php echo $fetch_cart['price']; ?></div>
-            <div class="qty-wrapper">
-               <button type="button" class="qty-btn minus">−</button>
-               <input type="number" name="cart_quantity" value="<?php echo $fetch_cart['quantity']; ?>" min="1" class="qty">
-               <button type="button" class="qty-btn plus">+</button>
+    <h1 class="title">shopping cart</h1>
+    <div class="cart-layout">
+        <div class="cart-left">
+            <div class="cart-header">
+            <span>Product</span>
+            <span>Price</span>
+            <span>Quantity</span>
+            <span>Subtotal</span>
+            <span>Action</span>
             </div>
-         </div>
-            <input type="hidden" value="<?php echo $fetch_cart['id']; ?>" name="cart_id">
-        <div class="action-buttons">
-            <a href="view_page.php?pid=<?php echo $fetch_cart['pid']; ?>" class="btn detail-btn">Details</a>
-            <input type="submit" value="update" class="option-btn" name="update_quantity">
+
+            <?php if(mysqli_num_rows($select_cart) > 0){ ?>
+            <?php while($fetch_cart = mysqli_fetch_assoc($select_cart)){ 
+
+            $sub_total = $fetch_cart['price'] * $fetch_cart['quantity'];
+            $grand_total += $sub_total;
+            ?>
+
+            <form class="cart-item"
+                data-id="<?php echo $fetch_cart['id']; ?>"
+                data-price="<?php echo $fetch_cart['price']; ?>">
+
+            <div class="product">
+                <!-- <a href="cart.php?delete=<?php echo $fetch_cart['id']; ?>" class="remove">×</a> -->
+                <img src="flowers/<?php echo $fetch_cart['image']; ?>">
+                <h4><?php echo $fetch_cart['name']; ?></h4>
+            </div>
+
+            <div class="price">
+                Rp <?php echo $fetch_cart['price']; ?>.000
+            </div>
+
+            <div class="qty-wrapper">
+                <button type="button" class="qty-btn minus">−</button>
+                <input type="number" class="qty" value="<?php echo $fetch_cart['quantity']; ?>" min="1">
+                <button type="button" class="qty-btn plus">+</button>
+            </div>
+
+            <div class="subtotal">
+                Rp <span class="subtotal-value"><?php echo $sub_total; ?></span>.000
+            </div>
+
+             <div class="delete">
+                <a href="cart.php?delete=<?php echo $fetch_cart['id']; ?>" class="bi bi-trash"></a>
+            </div>
+
+            </form>
+
+            <?php } } else { ?>
+            <p class="empty">your cart is empty</p>
+            <?php } ?>
+
         </div>
-        <div class="sub-total"> Sub-total : <span>Rp <?php echo $sub_total = ($fetch_cart['price'] * $fetch_cart['quantity']); ?></span>
-     </div>
-    </form> 
-    <?php
-    $grand_total += $sub_total;
-        }
-    }else{
-        echo '<p class="empty">your cart is empty</p>';
-    }
-    ?>
-    </div>
 
-    <div class="more-btn">
-        <a href="cart.php?delete_all" class="delete-btn <?php echo ($grand_total > 1)?'':'disabled' ?>" onclick="return confirm('delete all from cart?');">delete all</a>
-    </div>
+        <!-- RIGHT -->
+        <div class="cart-right">
+            <h3>Order Summary</h3>
 
-    <div class="cart-total">
-        <p>Total Keseluruhan : <span>Rp <?php echo $grand_total; ?></span></p>
-        <a href="shop.php" class="option-btn">continue shopping</a>
-        <a href="checkout.php" class="btn  <?php echo ($grand_total > 1)?'':'disabled' ?>">proceed to checkout</a>
-    </div>
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span>Rp <span id="grand-total"><?php echo $grand_total; ?></span>.000</span>
+            </div>
 
+            <div class="summary-row">
+                <span>Shipping</span>
+                <span>Rp 0</span>
+            </div>
+
+            <div class="summary-row total">
+                <span>Total</span>
+                <span>Rp <span id="grand-total-final"><?php echo $grand_total; ?></span>.000</span>
+            </div>
+
+            <a href="checkout.php"
+                class="checkout-btn <?php echo ($grand_total > 0)?'':'disabled' ?>">
+                Proceed to Checkout
+            </a>
+        </div>
+    </div>
 </section>
+
 
 
 
@@ -112,7 +144,57 @@ if(isset($_POST['update_quantity'])){
 
 <?php @include 'footer.php'; ?>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 <script src="js/script.js"></script>
+
+<script>
+$(document).on('click', '.qty-btn', function () {
+
+  let item = $(this).closest('.cart-item');
+  let qtyInput = item.find('.qty');
+  let price = parseInt(item.data('price'));
+  let cartId = item.data('id');
+
+  let qty = parseInt(qtyInput.val());
+
+  if ($(this).hasClass('plus')) {
+    qty++;
+  } else if ($(this).hasClass('minus') && qty > 1) {
+    qty--;
+  }
+
+  qtyInput.val(qty);
+
+  // update subtotal per item
+  let subtotal = price * qty;
+  item.find('.subtotal-value').text(subtotal);
+
+  // update grand total
+  updateGrandTotal();
+
+  // update database
+  $.ajax({
+    url: 'update_cart.php',
+    type: 'POST',
+    data: {
+      cart_id: cartId,
+      cart_quantity: qty
+    }
+  });
+
+});
+
+function updateGrandTotal() {
+  let total = 0;
+  $('.subtotal-value').each(function () {
+    total += parseInt($(this).text());
+  });
+  $('#grand-total, #grand-total-final').text(total);
+}
+</script>
+
+
 
 </body>
 </html>

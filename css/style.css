@@ -94,12 +94,12 @@ section{
 .delete-btn,
 .option-btn{
    display: inline-block;
-   border-radius: .5rem;
+   border-radius: .7rem;
    margin-top: 1rem;
    font-size: 1.8rem;
    color:var(--white);
    cursor: pointer;
-   padding:1rem 3rem;
+   padding:10px;
    text-transform: capitalize;
 }
 
@@ -1029,15 +1029,10 @@ section{
   font-size: 18px;
 }
 
-.checkout-btn{
+.cart-right .btn{
   display: block;
   text-align: center;
-  margin-top: 20px;
-  padding: 12px;
-  background: rgb(243, 135, 153);
-  color: #fff;
-  border-radius: 30px;
-  justify-content: flex-end;
+  font-size: 14px;
 }
 
 .display-order{

@@ -129,7 +129,7 @@ $select_cart = mysqli_query($conn, "SELECT * FROM `cart` WHERE user_id = '$user_
             </div>
 
             <a href="checkout.php"
-                class="checkout-btn <?php echo ($grand_total > 0)?'':'disabled' ?>">
+                class="btn <?php echo ($grand_total > 0)?'':'disabled' ?>">
                 Proceed to Checkout
             </a>
         </div>

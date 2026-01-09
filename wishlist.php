@@ -57,7 +57,7 @@ if(isset($_GET['delete_all'])){
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>wishlist</title>
 
-   <!-- icon  -->
+   <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
    <!-- custom admin css file link  -->
@@ -67,11 +67,6 @@ if(isset($_GET['delete_all'])){
 <body>
    
 <?php @include 'header.php'; ?>
-
-<section class="heading">
-    <h3>your wishlist</h3>
-    <p> <a href="home.php">home</a> / wishlist </p>
-</section>
 
 <section class="wishlist">
 
@@ -85,19 +80,18 @@ if(isset($_GET['delete_all'])){
         if(mysqli_num_rows($select_wishlist) > 0){
             while($fetch_wishlist = mysqli_fetch_assoc($select_wishlist)){
     ?>
-    <form action="" method="POST" class="box">
+     <form action="" method="post" class="box">
         <a href="wishlist.php?delete=<?php echo $fetch_wishlist['id']; ?>" class="bi bi-x" onclick="return confirm('delete this from wishlist?');"></a>
-        <a href="view_page.php?pid=<?php echo $fetch_wishlist['pid']; ?>" class="bi bi-eye"></a>
         <img src="flowers/<?php echo $fetch_wishlist['image']; ?>" alt="" class="image">
         <div class="name"><?php echo $fetch_wishlist['name']; ?></div>
-        <div class="price">Rp <?php echo $fetch_wishlist['price']; ?></div>
-        <input type="hidden" name="product_id" value="<?php echo $fetch_wishlist['pid']; ?>">
-        <input type="hidden" name="product_name" value="<?php echo $fetch_wishlist['name']; ?>">
-        <input type="hidden" name="product_price" value="<?php echo $fetch_wishlist['price']; ?>">
-        <input type="hidden" name="product_image" value="<?php echo $fetch_wishlist['image']; ?>">
-        <input type="submit" value="add to cart" name="add_to_cart" class="btn">
-        
-    </form>
+        <div class="price">Rp <?php echo $fetch_wishlist['price']; ?>.000</div>
+        <input type="hidden" value="<?php echo $fetch_wishlist['id']; ?>" name="wishlist_id">
+        <div class="action-buttons">
+            <a href="view_page.php?pid=<?php echo $fetch_wishlist['pid']; ?>" class="btn detail-btn">Details</a>
+            <input type="submit" value="add to cart" name="add_to_cart" class="btn">
+        </div>
+    </form> 
+    
     <?php
     $grand_total += $fetch_wishlist['price'];
         }
@@ -108,7 +102,7 @@ if(isset($_GET['delete_all'])){
     </div>
 
     <div class="wishlist-total">
-        <p>grand total : <span>Rp <?php echo $grand_total; ?></span></p>
+        <p>grand total : <span>Rp.<?php echo $grand_total; ?>/-</span></p>
         <a href="shop.php" class="option-btn">continue shopping</a>
         <a href="wishlist.php?delete_all" class="delete-btn <?php echo ($grand_total > 1)?'':'disabled' ?>" onclick="return confirm('delete all from wishlist?');">delete all</a>
     </div>

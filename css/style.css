@@ -832,32 +832,40 @@ section{
 }
 
 .wishlist .box-container{
-   max-width: 1200px;
    margin:0 auto;
    display: grid;
-   grid-template-columns: repeat(auto-fit, 33rem);
-   gap:1.5rem;
+   grid-template-columns: repeat(auto-fit, 22rem);
+   gap: 5rem;
    align-items: flex-start;
    justify-content: center;
+   padding: 2rem;
 }
 
 .wishlist .box-container .box{
-   padding:2rem;
-   text-align: center;
-   background-color: var(--white);
-   border:var(--border);
-   box-shadow: var(--box-shadow);
+   background-color: #f6f6f4;
+   box-shadow:
+      -14px -14px 28px rgb(255, 255, 255),
+       14px  14px 28px rgba(0,0,0,0.16);
    border-radius: .5rem;
+   padding:2rem;
+   text-align: flex-start;
    position: relative;
+   height: auto;
+}
+
+.wishlist .box-container .box:hover{
+   transform: translateY(-4px);
+   box-shadow:
+      -14px -14px 28px rgba(255,255,255,1),
+       14px  14px 28px rgba(0,0,0,0.16);
 }
 
 .wishlist .box-container .box .image{
-   height: 35rem;
+   height: 100%;
    width: 100%;
    object-fit: cover;
 }
 
-.wishlist .box-container .box .bi-eye,
 .wishlist .box-container .box .bi-x{
    position: absolute;
    top:1rem;
@@ -868,25 +876,12 @@ section{
    border-radius: .5rem;
 }
 
-.wishlist .box-container .box .bi-eye{
-   right:1rem;
-   border:var(--border);
-   background-color: var(--white);
-   color:var(--black);
-}
-
-.wishlist .box-container .box .bi-eye:hover{
-   background-color: var(--black);
-   color:var(--white);
-}
-
 .wishlist .box-container .box .bi-x{
-   background-color: var(--red);
-   color:var(--white);
+   color:var(--red);
 }
 
 .wishlist .box-container .box .bi-x:hover{
-   background-color: var(--black);
+   transform: translateY(-4px);
 }
 
 .wishlist .box-container .box .name{
@@ -896,9 +891,46 @@ section{
 }
 
 .wishlist .box-container .box .price{
-   font-size: 2.5rem;
-   color:var(--red);
-   margin:.5rem 0;
+   font-size: 1.8rem;
+   color:var(--black);
+   align-items: flex-start;
+}
+
+.wishlist .box-container .box .action-buttons{
+   display: flex;
+   align-items: flex-start;
+   gap: .5rem;
+   margin-top: 2rem;
+}
+
+.wishlist .box-container .box .action-buttons .btn,
+.wishlist .box-container .box .action-buttons input{
+   flex: 0 0 auto;
+   width: auto;        
+   padding: .6rem;
+   font-size: 1.2rem;
+}
+
+.wishlist .box-container .box .detail-btn{
+   background: #f6f6f4;
+   color: var(--pink);
+   border: 1px solid var(--pink);
+   box-shadow: none;
+}
+
+.wishlist .box-container .box .detail-btn:hover{
+   background: #f2f4f8;
+}
+
+
+.wishlist .box-container .box .action-buttons{
+   display: flex;
+   gap: .5rem;
+   margin-top: 1.5rem;
+}
+
+.wishlist .box-container .box .action-buttons button{
+   flex: 0 0 auto;
 }
 
 .wishlist .wishlist-total{

@@ -31,10 +31,6 @@ if(!isset($user_id)){
    
 <?php @include 'header.php'; ?>
 
-<section class="heading">
-    <h3>Your orders</h3>
-    <p> <a href="home.php">home</a> / orders </p>
-</section>
 
 <section class="placed-orders">
 
@@ -47,24 +43,71 @@ if(!isset($user_id)){
         if(mysqli_num_rows($select_orders) > 0){
             while($fetch_orders = mysqli_fetch_assoc($select_orders)){
     ?>
-    <div class="box">
-        <p> Ditempatkan pada : <span><?php echo $fetch_orders['placed_on']; ?></span> </p>
-        <p> Nama             : <span><?php echo $fetch_orders['name']; ?></span> </p>
-        <p> Telepon          : <span><?php echo $fetch_orders['number']; ?></span> </p>
-        <p> Email            : <span><?php echo $fetch_orders['email']; ?></span> </p>
-        <p> Alamat           : <span><?php echo $fetch_orders['address']; ?></span> </p>
-        <p> Metode pembayaran: <span><?php echo $fetch_orders['method']; ?></span> </p>
-        <p> Pesanan Anda     : <span><?php echo $fetch_orders['total_products']; ?></span> </p>
-        <p> Total Pembayaran : <span>Rp<?php echo $fetch_orders['total_price']; ?></span> </p>
-        <p> Status pembayaran: <span style="color:<?php if($fetch_orders['payment_status'] == 'pending'){echo 'tomato'; }else{echo 'green';} ?>"><?php echo $fetch_orders['payment_status']; ?></span> </p>
-    
-        <!-- untuk melihat history pembayaran -->
-        <?php if($fetch_orders['payment_status'] == 'pending'){ ?>
-            <a href="payment.php?order_id=<?php echo $fetch_orders['id']; ?>" class="btn">Proceed to Payment</a>
-        <?php } else { ?>
-            <a href="payment.php?order_id=<?php echo $fetch_orders['id']; ?>" class="btn">View Payment History</a>
-        <?php } ?>
+    <div class="order-card">
+
+  <!-- LEFT INFO -->
+  <div class="order-left">
+
+    <div class="order-status <?php echo $fetch_orders['payment_status']; ?>">
+      <?php echo ucfirst($fetch_orders['payment_status']); ?>
     </div>
+
+    <div class="order-meta">
+      <div>
+        <small>Tanggal Order</small>
+        <p><?php echo $fetch_orders['placed_on']; ?></p>
+      </div>
+
+      <div>
+        <small>Metode Pembayaran</small>
+        <p><?php echo $fetch_orders['method']; ?></p>
+      </div>
+
+      <div>
+        <small>Nama</small>
+        <p><?php echo $fetch_orders['name']; ?></p>
+      </div>
+
+      <div>
+        <small>Telepon</small>
+        <p><?php echo $fetch_orders['number']; ?></p>
+      </div>
+
+      <div>
+        <small>Email</small>
+        <p><?php echo $fetch_orders['email']; ?></p>
+      </div>
+
+      <div>
+        <small>Alamat</small>
+        <p><?php echo $fetch_orders['address']; ?></p>
+      </div>
+    </div>
+
+    <div class="order-total">
+      Total Pembayaran: <strong>Rp<?php echo $fetch_orders['total_price']; ?></strong>
+    </div>
+
+    <?php if($fetch_orders['payment_status'] == 'pending'){ ?>
+      <a href="payment.php?order_id=<?php echo $fetch_orders['id']; ?>" class="btn">
+        Proceed to Payment
+      </a>
+    <?php } else { ?>
+      <a href="payment.php?order_id=<?php echo $fetch_orders['id']; ?>" class="btn outline">
+        View Payment History
+      </a>
+    <?php } ?>
+
+  </div>
+
+  <!-- RIGHT PRODUCTS -->
+  <div class="order-right">
+    <h4>Produk</h4>
+    <p><?php echo $fetch_orders['total_products']; ?></p>
+  </div>
+
+</div>
+
     <?php
         }
     }else{

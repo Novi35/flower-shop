@@ -1150,77 +1150,118 @@ section{
 }
 
 /* Ganti atau tambahkan ini untuk .placed-orders (wrapper utama) */
-.placed-orders {
-    background-color: var(--white);
-    border: var(--border);
-    max-width: 1200px;
-    margin: 0 auto;
-    border-radius: .5rem;
-    padding: 2rem;
-    box-shadow: var(--box-shadow);
+.placed-orders{
+  max-width: 1100px;
+  margin: 0 auto 60px;
 }
 
-.placed-orders .title {
-    text-align: center;
-    font-size: 2.5rem;
-    color: var(--black);
-    margin-bottom: 2rem;
-    text-transform: capitalize;
+.order-card{
+  background: #fff;
+  border-radius: 14px;
+  padding: 25px;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.08);
+  margin-bottom: 25px;
 }
 
-.placed-orders .box-container {
-    display: grid;  
-    grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));  
-    gap: 1.5rem;
-    align-items: flex-start;  
+/* LEFT */
+.order-left{
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-.placed-orders .box-container .box {
-    background-color: var(--white);  
-    padding: 2rem;  
-    border: var(--border);
-    box-shadow: var(--box-shadow);
-    border-radius: .5rem;
-    flex: 1 1 40rem;  
+.order-status{
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  width: fit-content;
+  text-transform: capitalize;
+  font-weight: 500;
 }
 
-.placed-orders .box-container .box p {
-    margin: 1rem 0;  
-    font-size: 1.8rem;  
-    line-height: 1.5;
-    color: var(--black);  
+.order-status.pending{
+  background: #ffe4e0;
+  color: #d9534f;
 }
 
-.placed-orders .box-container .box p span {
-    color: var(--red);  
+.order-status.completed{
+  background: #e4f8ed;
+  color: #2e8b57;
 }
 
-/* Tambahkan untuk tombol di box */
-.placed-orders .box-container .box .btn {
-    background-color: var(--pink);
-    color: var(--white);
-    padding: 1rem 2rem;
-    font-size: 1.6rem;
-    border-radius: .5rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 1rem;
-    display: inline-block;
-    text-decoration: none;
+.order-meta{
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 15px 25px;
 }
 
-.placed-orders .box-container .box .btn:hover {
-    background-color: var(--light-bg);
-    color: var(--black);
+.order-meta small{
+  font-size: 12px;
+  color: #888;
 }
 
-/* Untuk pesan empty */
-.placed-orders .empty {
-    text-align: center;
-    font-size: 2rem;
-    color: var(--light-color);
-    margin: 2rem 0;
+.order-meta p{
+  margin-top: 4px;
+  font-size: 14px;
+  color: #222;
 }
+
+.order-total{
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+/* RIGHT */
+.order-right{
+  border-left: 1px solid #eee;
+  padding-left: 25px;
+}
+
+.order-right h4{
+  margin-bottom: 10px;
+  font-size: 15px;
+  color: #222;
+}
+
+.order-right p{
+  font-size: 14px;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* BUTTON */
+.btn{
+  margin-top: 10px;
+  padding: 12px;
+  background: #000;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+}
+
+.btn.outline{
+  background: #fff;
+  color: #000;
+  border: 1px solid #000;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .order-card{
+    grid-template-columns: 1fr;
+  }
+
+  .order-right{
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+  }
+}
+
 
 
 
